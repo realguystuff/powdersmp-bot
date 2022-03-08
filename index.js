@@ -261,8 +261,24 @@ client.on("messageCreate", async (message) => {
       }
     }
   }
-
+  {
+    let blacklisted = ['shit', 'fuck', 'fick', 'hell'];
+    let foundInText = false;
+    for (var i in blacklisted) {
+      if (message.content.toLowerCase().includes(blacklisted[i].toLowerCase())) {
+        foundInText = true;
+      }
+    }
+    if (foundInText) {
+      message.delete();
+      message.channel.send('Watch your mouth.');
+      .then(msg => {
+        setTimeout(() => msg.delete(), 5000)
+      })
+    }
+  } // bad word handler
 });
+
 client.login(process.env.token);
 console.log('Finished booting bot!');
 console.log('Starting logging token...');
