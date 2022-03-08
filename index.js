@@ -262,7 +262,7 @@ client.on("messageCreate", async (message) => {
     }
   }
   {
-    let blacklisted = ['shit', 'fuck', 'fick', 'hell'];
+    let blacklisted = ['shit', 'fuck', 'fick', 'hell', 'pissed', 'bitch', 'damn', 'crap', 'bullshit', 'balls', 'asshole', 'dick', 'bastard', 'motherfucker'];
     let foundInText = false;
     for (var i in blacklisted) {
       if (message.content.toLowerCase().includes(blacklisted[i].toLowerCase())) {
@@ -271,10 +271,7 @@ client.on("messageCreate", async (message) => {
     }
     if (foundInText) {
       message.delete();
-      message.channel.send('Watch your mouth.');
-      .then(msg => {
-        setTimeout(() => msg.delete(), 5000)
-      })
+      message.channel.send('Watch your mouth.').then(msg => {setTimeout(() => msg.delete(), 5000)})
     }
   } // bad word handler
 });
