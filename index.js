@@ -271,6 +271,9 @@ client.on("messageCreate", async (message) => {
     }
     if (foundInText) {
       message.delete();
+      const user = message.options.getUser('target');
+      await message.reply(`Hi, ${user}.`);
+      await message.followUp('Hi, <@user id>.');
       message.channel.send('Watch your mouth.').then(msg => {setTimeout(() => msg.delete(), 5000)})
     }
   } // bad word handler
