@@ -143,12 +143,7 @@ API latency is slow (more than 90ms). Check out <https://discordstatus.com/> if 
     }).catch((err) => {
         // Failmessage
         console.log(err);
-        if (debug === true) {
-          message.channel.send("Access Denied");
-          message.channel.send(err);
-        } else {
-          message.channel.send("Access Denied.");
-        }
+        message.channel.send("Access Denied");
     });
 }
 });
@@ -166,12 +161,7 @@ client.on("messageCreate", (message) => {
         }).catch((err) => {
             // Failmessage
             console.log(err);
-            if (debug === true) {
-              message.channel.send("Access Denied");
-              message.channel.send(err);
-            } else {
-              message.channel.send("Access Denied.");
-            }
+            message.channel.send("Access Denied");
         });
     }
   /*
