@@ -9,11 +9,18 @@ app.get('/', (req, res) => res.send('Dang the repl is on nice'));
 app.listen(port, () => console.log(`Listening at http://localhost:${port}`));
 
 // ================= START BOT CODE ===================
+console.info('Settings:')
 const { MessageEmbed } = require('discord.js');
 const Discord = require('discord.js');
 const client = new Discord.Client({ intents: 32767 })
 const p = '!'
-const ver = '1.2 Alpha Preview'
+const ver = '1.2.1 Alpha Preview'
+console.info(`prefix:${p}`)
+console.info(`version:${ver}`)
+console.info(`userCommands:ping,ip,credits,help,rules,log,id`)
+console.info(`modCommands:kick,ban`)
+console.info(`ownerCommands:eval`)
+
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
   client.user.setActivity('on the MC server');
@@ -21,6 +28,12 @@ client.on('ready', () => {
 
 
 client.on('messageCreate', msg => {
+  if (msg.content === 'id') {
+    msg.reply(`My user ID is \`943094980640129028\`.`)
+  }
+  if (msg.content === '<@943094980640129028>') {
+    msg.reply(`Prfix is ${p}.`)
+  }
   if (msg.content === p+'ping') {
     const clientPing = Date.now() - msg.createdTimestamp;
     const apiPing = Math.round(client.ws.ping);
@@ -257,13 +270,11 @@ client.on("messageCreate", async (message) => {
     for (var i in blacklisted) {
       if (message.content.toLowerCase().includes(blacklisted[i].toLowerCase())) {
         foundInText = true;
+        console.log('Blacklisted word found!')
       }
     }
     if (foundInText) {
       message.delete();
-      const user = message.options.getUser('target');
-      await message.reply(`Hi, ${user}.`);
-      await message.followUp('Hi, <@user id>.');
       message.channel.send('Watch your mouth.').then(msg => {setTimeout(() => msg.delete(), 5000)})
     }
   } // bad word handler
