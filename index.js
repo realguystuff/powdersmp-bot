@@ -19,7 +19,7 @@ console.info(`prefix:${p}`)
 console.info(`version:${ver}`)
 console.info(`userCommands:ping,ip,credits,help,rules,log,id`)
 console.info(`modCommands:kick,ban`)
-console.info(`ownerCommands:eval`)
+console.info(`ownerCommands:eval\n`)
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
@@ -137,7 +137,7 @@ API latency is slow (more than 90ms). Check out <https://discordstatus.com/> if 
       .setTitle('Changelog')
       .setColor('#b8ff00')
       .setURL('https://Changelog-for-PowderSMP-bot.realguybackup.repl.co')
-      .setDescription(`${ver} added two mod commands, \`!kick\` and \`!ban\`.`)
+      .setDescription(`${ver} added mention replies and added one new command.`)
       .setTimestamp()
   	  .setFooter({ text: `For historical updates, please click the title.`});
 
@@ -256,8 +256,15 @@ client.on("messageCreate", async (message) => {
       try {
         const evaled = eval(args.join(" "));
         let cleaned = await clean(client, evaled);
-        message.channel.send(`\`\`\`js\n${cleaned}\n\`\`\``);
-      } catch (err) {
+        const embedEval = new MessageEmbed()
+          .setTitle('Eval succeeded')
+          .setColor('#00ff8f')
+          .addField('Result:', `\`\`\`js\n${cleaned}\n\`\`\``, false)
+          .setTimestamp()
+          .setFooter({ text: 'Eval has been succeded.' })
+        
+        message.channel.send({ embeds: [embedEval] });
+      } catch {
         const evaled = eval(args.join(" "));
         const cleaned = await clean(client, evaled);
         message.channel.send(`\`ERROR\` \`\`\`xl\n${cleaned}\n\`\`\``);

@@ -31,6 +31,7 @@ pattern = "**/{*.js,*.jsx,*.ts,*.tsx}"
 
   [languages.javascript.languageServer]
   start = [ "typescript-language-server", "--stdio" ]
+  run = "npx npm@latest i discord.js ; npx node@latest ."
 
 [debugger]
 support = true
