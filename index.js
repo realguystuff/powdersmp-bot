@@ -28,12 +28,16 @@ client.on('ready', () => {
 
 
 client.on('messageCreate', msg => {
-  if (msg.content === 'id') {
+  if (msg.content === p+'id') {
     msg.reply(`My user ID is \`943094980640129028\`.`)
   }
-  if (msg.content === '<@943094980640129028>') {
-    msg.reply(`Prfix is ${p}.`)
-  }
+  if (message.author.bot) return false;
+
+  if (message.content.includes("@here") || message.content.includes("@everyone") || message.type == "REPLY") return false;
+
+    if (message.mentions.has(client.user.id)) {
+        message.channel.send(`Prefix is ${p}`);
+    }
   if (msg.content === p+'ping') {
     const clientPing = Date.now() - msg.createdTimestamp;
     const apiPing = Math.round(client.ws.ping);
@@ -264,10 +268,8 @@ client.on("messageCreate", async (message) => {
           .setFooter({ text: 'Eval has been succeded.' })
         
         message.channel.send({ embeds: [embedEval] });
-      } catch {
-        const evaled = eval(args.join(" "));
-        const cleaned = await clean(client, evaled);
-        message.channel.send(`\`ERROR\` \`\`\`xl\n${cleaned}\n\`\`\``);
+      } catch (err) {
+        message.channel.send(`\`ERROR\` \`\`\`xl\n${err.message}\n\`\`\``);
       }
     }
   }
@@ -275,7 +277,9 @@ client.on("messageCreate", async (message) => {
     let blacklisted = ['shit', 'fuck', 'fick', 'hell', 'pissed', 'bitch', 'damn', 'crap', 'bullshit', 'balls', 'asshole', 'dick', 'bastard', 'motherfucker'];
     let foundInText = false;
     for (var i in blacklisted) {
-      if (message.content.toLowerCase().includes(blacklisted[i].toLowerCase())) {
+      if (message.author.id === '943094980640129028') {
+        return;
+      } else if (message.content.toLowerCase().includes(blacklisted[i].toLowerCase())) {
         foundInText = true;
         console.log('Blacklisted word found!')
       }
