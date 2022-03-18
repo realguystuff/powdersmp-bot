@@ -84,10 +84,10 @@ client.on('messageCreate', msg => {
       .setDescription('Thank you all who have helped make this bot possible:')
       .setThumbnail('https://www.gpb.org/sites/default/files/styles/large/public/2020-05/thecreditslogo_0.png?h=fbf7a813&itok=sKOJCKrH')
       .addFields(
-        {name: 'SMP Owner', value '`praneethprogamer`'},
+        {name: 'SMP Owner', value: '`praneethprogamer`'},
         {name: 'Bot Creator Leader', value: '`|| Windows 11 ||`'},
         {name: 'Bot Creator 2', value: '`shourgamer2`'},
-        {name: 'Bot Creator 3', value '`Quinten/slimey`'}
+        {name: 'Bot Creator 3', value: '`Quinten/slimey`'}
       )
       .setTimestamp()
       .setFooter('Without them this bot wouldn\'t exist!')
@@ -117,7 +117,7 @@ client.on('messageCreate', msg => {
       .setTitle('Changelog')
       .setColor('#b8ff00')
       .setURL('https://Changelog-for-PowderSMP-bot.realguybackup.repl.co')
-      .setDescription(`${ver} added mention replies and added one new command.`)
+      .setDescription(`${ver} fixed slow pings and revoked permission of the new command, **made** \`!unban\` **command**`)
       .setTimestamp()
   	  .setFooter({ text: `For historical updates, please click the title.`});
 
@@ -142,7 +142,7 @@ client.on('messageCreate', msg => {
         msg.channel.send(`Error...`)
       }
       msg.guild.members.unban(bUser.user)
-    }
+    })
   }
   if (msg.content.startsWith("!kick")) {
     if(!msg.member.roles.cache.some(r => r.name === "SMP-DEV")) return;
