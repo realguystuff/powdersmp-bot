@@ -200,7 +200,7 @@ const clean = async (client, text) => {
 client.on("messageCreate", async (message) => {
   const args = message.content.split(" ").slice(1);
 
-  if (message.author.id === ownerID || message.author.id === id) {
+  if (message.author.id === ownerID) {
     function resetBot(channel) {
       channel.send('Restarting...')
       .then(msg => client.destroy())
@@ -226,7 +226,11 @@ client.on("messageCreate", async (message) => {
             break;
     }
   } else {
-    return message.channel.send("Access Denied.");
+    if (message.author.id === id) {
+      return;
+    } else {
+      return message.channel.send("Access Denied.");
+    }
   }
   if (message.content.startsWith(`${p}eval`)) {
     if (message.author.id !== ownerID) {
