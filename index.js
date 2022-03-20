@@ -202,10 +202,10 @@ client.on("messageCreate", async (message) => {
 
   if (message.author.id === ownerID) {
     function resetBot(channel) {
-      channel.send('Restarting...')
+      channel.send('`client.destroy()`')
       .then(msg => client.destroy())
       .then(() => client.login(process.env.token));
-      channel.send('Finished restarting!')
+      channel.send('`client.login()`')
     }
 
     if (message.content === p+'ownerhelp') {
@@ -220,15 +220,20 @@ client.on("messageCreate", async (message) => {
     if (message.content === p+'stop') {
      message.channel.send("Stopping")
      process.exit();
-   } switch(message.content.toUpperCase()) {
-        case '!RESTART':
-            resetBot(message.channel);
-            break;
+    } switch(message.content.toUpperCase()) {
+      case '!RESTART':
+        resetBot(message.channel);
+        break;
     }
   } else {
     if (message.author.id === id) {
-      return;
+       return false;
     } else {
+      bot.on("guildMemberAdd", function(member) {
+        if (member.user.bot === true) {
+          return false;
+        }
+      });
       return message.channel.send("Access Denied.");
     }
   }
