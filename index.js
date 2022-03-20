@@ -1,5 +1,6 @@
 console.log('Booting bot...');
 
+const fs = require('fs');
 const express = require('express');
 const app = express();
 const port = 3000;
@@ -16,6 +17,7 @@ function wait(time) {
     return;
   }
 }
+const id = "943094980640129028"
 const ownerID = "821682594830614578"
 console.info('Settings:')
 const { MessageEmbed } = require('discord.js');
@@ -29,7 +31,7 @@ client.on('debug', console.info)
   .on('error', console.error)
 
 const p = '!'
-const ver = '1.2.1 Alpha Preview'
+const ver = '1.2.2 Alpha Preview'
 console.info(`prefix:${p}`)
 console.info(`version:${ver}`)
 console.info(`userCommands:ping,ip,credits,help,rules,log,id`)
@@ -47,7 +49,7 @@ client.on('messageCreate', msg => {
     if (msg.author.id !== ownerID) {
       return msg.channel.send('Access Denied.')
     } else {
-      msg.reply('`943094980640129028`')
+      msg.reply(`\`${id}\``)
     }
   }
   if (msg.author.bot) return false;
@@ -123,27 +125,35 @@ client.on('messageCreate', msg => {
 
     msg.channel.send({ embeds: [embedLog] });
   }
-  if(msg.content.startsWith("!unban")){
-    if(!msg.member.hasPermission("BAN_MEMBERS")) {
-      return msg.channel.send(`**${msg.author.username}**, You do not have perms to unban someone`)
-    }
-    
-    if(!msg.guild.me.hasPermission("BAN_MEMBERS")) {
-      return msg.channel.send(`**${msg.author.username}**, I do not have perms to unban someone`)
-    }
-    
-    let userID = args[0]
-      msg.guild.fetchBans().then(bans=> {
-      if(bans.size == 0) {
-        return msg.channel.send(`**${msg.author.username}**, the user isn't banned`)
-      }
-      let bUser = bans.find(b => b.user.id == userID)
-      if(!bUser) {
-        msg.channel.send(`Error...`)
-      }
-      msg.guild.members.unban(bUser.user)
-    })
+  /*
+  if(msg.content === p+'debug') {
+    msg.channel.send(`${msg}`)
   }
+  if(msg.content.startsWith("!unban")){
+    try {
+      if(!msg.member.msg.mentions.permissions.has("BAN_MEMBERS")) {
+        return msg.channel.send(`**${msg.author.username}**, You do not have perms to unban someone`)
+      }
+      
+      if(!msg.guild.me.msg.mentions.permissions.has("BAN_MEMBERS")) {
+        return msg.channel.send(`**${msg.author.username}**, I do not have perms to unban someone`)
+      }
+      
+      let userID = args[0]
+        msg.guild.fetchBans().then(bans=> {
+        if(bans.size == 0) {
+          return msg.channel.send(`**${msg.author.username}**, the user isn't banned`)
+        }
+        let bUser = bans.find(b => b.user.id == userID)
+        if(!bUser) {
+          msg.channel.send(`Error...`)
+        }
+        msg.guild.members.unban(bUser.user)
+      })
+    } catch (err) {
+      msg.channel.send(`\`\`\`js\n${err}\`\`\``)
+    }
+  }*/
   if (msg.content.startsWith("!kick")) {
     if(!msg.member.roles.cache.some(r => r.name === "SMP-DEV")) return;
     var member = msg.mentions.members.first();
@@ -170,8 +180,8 @@ client.on("messageCreate", (message) => {
         message.channel.send(member.displayName + " has been successfully banned!");
   }).catch((err) => {
         // Failmessage
-        console.log(err);
-        message.channel.send("Access Denied");
+        console.error(`Error! `+err);
+        message.channel.send(`\`\`\`js\n${err}\`\`\``);
     });
   }
 })
@@ -190,7 +200,7 @@ const clean = async (client, text) => {
 client.on("messageCreate", async (message) => {
   const args = message.content.split(" ").slice(1);
 
-  if (message.author.id === "821682594830614578") {
+  if (message.author.id === ownerID || message.author.id === id) {
     function resetBot(channel) {
       channel.send('Restarting...')
       .then(msg => client.destroy())
@@ -216,10 +226,10 @@ client.on("messageCreate", async (message) => {
             break;
     }
   } else {
-    return;
+    return message.channel.send("Access Denied.");
   }
   if (message.content.startsWith(`${p}eval`)) {
-    if (message.author.id !== "821682594830614578") {
+    if (message.author.id !== ownerID) {
       return message.channel.send(`Access Denied.`)
     } else {
       try {
@@ -237,7 +247,7 @@ client.on("messageCreate", async (message) => {
         const embedEvalError = new MessageEmbed()
           .setTitle('Eval errored.')
           .setColor('#ff0000')
-          .addField('Result:', `\`\`\`js\n${err.message}\n\`\`\``, false)
+          .addField('Result:', `\`\`\`js\n${err}\n\`\`\``, false)
           .setTimestamp()
           .setFooter({ text: 'Eval has errored.' })
         
@@ -246,14 +256,14 @@ client.on("messageCreate", async (message) => {
     }
   }
   {
-    let blacklisted = ['shit', 'fuck', 'fick', 'hell', 'pissed', 'bitch', 'damn', 'crap', 'bullshit', 'balls', 'asshole', 'dick', 'bastard', 'motherfucker'];
+    const blacklisted = ['shit', 'fuck', 'fick', 'hell', 'pissed', 'bitch', 'damn', 'crap', 'bullshit', 'balls', 'asshole', 'dick', 'bastard', 'motherfucker'];
     let foundInText = false;
     for (var i in blacklisted) {
-      if (message.author.id === '943094980640129028') {
-        return;
+      if (message.author.id === id) {
+        return console.warn('Blacklisted word found by the bot! Check if there are any blacklisted words.')
       } else if (message.content.toLowerCase().includes(blacklisted[i].toLowerCase())) {
         foundInText = true;
-        console.log('Blacklisted word found!')
+        console.info('Blacklisted word found!')
       }
     }
     if (foundInText) {
