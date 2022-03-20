@@ -226,20 +226,11 @@ client.on("messageCreate", async (message) => {
         break;
     }
   } else {
-    if (message.author.id === id) {
-       return false;
-    } else {
-      bot.on("guildMemberAdd", function(member) {
-        if (member.user.bot === true) {
-          return false;
-        }
-      });
-      return message.channel.send("Access Denied.");
-    }
+    return false;
   }
   if (message.content.startsWith(`${p}eval`)) {
     if (message.author.id !== ownerID) {
-      return message.channel.send(`Access Denied.`)
+      return false;
     } else {
       try {
         const evaled = eval(args.join(" "));
