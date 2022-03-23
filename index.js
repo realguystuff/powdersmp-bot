@@ -1,4 +1,4 @@
-console.log('Booting bot...');
+console.log('Booting...');
 
 const fs = require('fs');
 const express = require('express');
@@ -10,20 +10,15 @@ app.get('/', (req, res) => res.send('Dang the repl is on nice'));
 app.listen(port, () => console.log(`Listening at http://localhost:${port}`));
 
 // ================= START BOT CODE ===================
-function wait(time) {
-  let ms = time*1000
-  ms = ms - 1;
-  if (ms <= 0) {
-    return;
-  }
-}
 const id = "943094980640129028"
 const ownerID = "821682594830614578"
-console.info('Settings:')
 const { MessageEmbed } = require('discord.js');
 const Discord = require('discord.js');
 const index = require('./index.js');
-//const config = require('./config.json')
+
+//const readConfig = require('readConfig');
+var readConfig = require('read-config')
+const config = readConfig('./config.json') // doesnt hook up
 const client = new Discord.Client({ intents: 32767 })
 
 client.on('debug', console.info)
@@ -32,15 +27,10 @@ client.on('debug', console.info)
 
 const p = '!'
 const ver = '1.2.2 Alpha Preview'
-console.info(`prefix:${p}`)
-console.info(`version:${ver}`)
-console.info(`userCommands:ping,ip,credits,help,rules,log,id`)
-console.info(`modCommands:kick,ban`)
-console.info(`ownerCommands:eval\n`)
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
-  client.user.setActivity('on the MC server');
+  client.user.setActivity('on the PowderSMP!');
 });
 
 
@@ -169,6 +159,7 @@ client.on('messageCreate', msg => {
   }
 });
 client.on("messageCreate", (message) => {
+  /*
   if (message.content.startsWith("!ban")) {
     if(!message.member.roles.cache.some(r => r.name === "SMP-DEV")) {
       return;
@@ -183,7 +174,7 @@ client.on("messageCreate", (message) => {
         console.error(`Error! `+err);
         message.channel.send(`\`\`\`js\n${err}\`\`\``);
     });
-  }
+  }*/
 })
 const clean = async (client, text) => {
   if (text && text.constructor.name == "Promise")
