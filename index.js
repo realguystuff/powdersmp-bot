@@ -17,8 +17,8 @@ const Discord = require('discord.js');
 const index = require('./index.js');
 
 //const readConfig = require('readConfig');
-var readConfig = require('read-config')
-const config = readConfig('./config.json') // doesnt hook up
+const readConfig = require('read-config')
+const config = readConfig('./config.json')
 const client = new Discord.Client({ intents: 32767 })
 
 client.on('debug', console.info)

@@ -1,6 +1,6 @@
 {
   "name": "modernwigglycalculators",
-  "version": "1.0.0",
+  "version": "1.2.2",
   "description": "",
   "main": "index.js",
   "dependencies": {
@@ -61,6 +61,7 @@
     "json-schema-traverse": "^0.4.1",
     "json-stringify-safe": "^5.0.1",
     "jsprim": "^1.4.2",
+    "js-yaml": ">=3.13.1",
     "media-typer": "^0.3.0",
     "merge-descriptors": "^1.0.1",
     "methods": "^1.1.2",
