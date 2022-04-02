@@ -1,24 +1,24 @@
 {
-  p: "!",
-  ver: "1.2.2",
-  member: {
-    user: {
-      lvl: 0,
-      cmd: "ping, ip, credits, log, help",
+  "p": "!",
+  "ver": "1.2.2 Alpha Preview",
+  "user": {
+    "member": {
+      "lvl": 0,
+      "cmd": "ping, ip, credits, log, help"
     },
-    mod: {
-      lvl: 1,
-      cmd: "kick, [ban, unban]",
+    "mod": {
+      "lvl": 1,
+      "cmd": "kick, [ban, unban]"
     },
-    admin: {
-      lvl: 2,
-      cmd: "",
+    "admin": {
+      "lvl": 2,
+      "cmd": ""
     },
-    owner: {
-      lvl: 3,
-      ownerID: "821682594830614578",
-      botID: "943094980640129028",
-      cmd: "ownerhelp, eval, stop, restart",
+    "owner": {
+      "lvl": 3,
+      "ownerID": "821682594830614578",
+      "botID": "943094980640129028",
+      "cmd": "ownerhelp, eval, stop, restart"
     }
   }
 }
